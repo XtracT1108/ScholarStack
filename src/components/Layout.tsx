@@ -33,8 +33,8 @@ const NavItem = ({ icon: Icon, label, active, onClick, collapsed }: NavItemProps
     className={cn(
       "flex items-center gap-3 w-full p-3.5 rounded-2xl transition-all duration-500 group relative overflow-hidden",
       active
-        ? "bg-slate-900 text-white shadow-premium"
-        : "text-slate-500 hover:bg-white/50 hover:text-slate-900"
+        ? "bg-indigo-600 dark:bg-slate-800 text-white shadow-premium"
+        : "text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-slate-100"
     )}
   >
     {active && (
@@ -43,11 +43,11 @@ const NavItem = ({ icon: Icon, label, active, onClick, collapsed }: NavItemProps
         className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 opacity-50"
       />
     )}
-    <Icon size={22} className={cn("shrink-0 relative z-10 transition-transform duration-500", active ? "text-indigo-400" : "group-hover:scale-110 group-hover:rotate-6")} />
+    <Icon size={22} className={cn("shrink-0 relative z-10 transition-transform duration-500", active ? "text-indigo-200" : "group-hover:scale-110 group-hover:rotate-6")} />
     {!collapsed && (
       <span className={cn(
         "font-display font-semibold text-sm tracking-tight relative z-10 transition-all duration-500",
-        active ? "opacity-100 translate-x-0" : "opacity-80 group-hover:opacity-100 group-hover:translate-x-1"
+        active ? "opacity-100 translate-x-0 text-white" : "opacity-80 group-hover:opacity-100 group-hover:translate-x-1"
       )}>
         {label}
       </span>
@@ -55,7 +55,7 @@ const NavItem = ({ icon: Icon, label, active, onClick, collapsed }: NavItemProps
     {!collapsed && active && (
       <motion.div
         layoutId="active-dot"
-        className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400 relative z-10 shadow-[0_0_10px_rgba(129,140,248,0.8)]"
+        className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-300 relative z-10 shadow-[0_0_10px_rgba(129,140,248,0.8)]"
       />
     )}
   </button>
@@ -133,12 +133,12 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                       <Calculator size={24} className="text-indigo-400 relative z-10" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-display font-black text-2xl leading-none tracking-tighter bg-gradient-to-br from-slate-900 via-slate-800 to-slate-600 bg-clip-text text-transparent">
+                      <span className="font-display font-black text-2xl leading-none tracking-tighter bg-gradient-to-br from-indigo-400 via-slate-200 to-slate-400 dark:from-indigo-300 dark:via-white dark:to-slate-300 bg-clip-text text-transparent">
                         ScholarStack
                       </span>
                       <div className="flex items-center gap-1.5 mt-1.5">
                         <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Research Engine</span>
+                        <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em]">Research Engine</span>
                       </div>
                     </div>
                   </motion.div>
@@ -160,7 +160,7 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             <nav className="flex-1 px-4 space-y-2 mt-8 relative z-10">
               <div className="px-4 mb-4 flex items-center justify-between">
                 <span className={cn(
-                  "text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] transition-opacity duration-500",
+                  "text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] transition-opacity duration-500",
                   !isSidebarOpen && "opacity-0"
                 )}>
                   Research Core
@@ -202,17 +202,17 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             {/* System Status / Meta */}
             {isSidebarOpen && (
               <div className="px-8 py-6 space-y-4">
-                <div className="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100/50 space-y-3">
-                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/50 dark:border-indigo-700/30 space-y-3">
+                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
                     <span>Engine Alpha</span>
                     <span>v2.4.0</span>
                   </div>
-                  <div className="w-full h-1 bg-indigo-100 rounded-full overflow-hidden">
+                  <div className="w-full h-1 bg-indigo-100 dark:bg-indigo-900/50 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                      className="h-full bg-indigo-500"
+                      className="h-full bg-indigo-500 dark:bg-indigo-400"
                     />
                   </div>
                 </div>
@@ -220,11 +220,11 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             )}
 
             {/* User Profile */}
-            <div className="p-4 border-t border-indigo-50/50 mt-auto relative z-10">
+            <div className="p-4 border-t border-indigo-50/50 dark:border-slate-700/50 mt-auto relative z-10">
               {user ? (
                 <div className={cn(
                   "flex items-center gap-4 p-3.5 rounded-2xl transition-all duration-500 group/user",
-                  isSidebarOpen ? "bg-white/60 border border-white shadow-sm hover:shadow-md hover:bg-white" : "justify-center"
+                  isSidebarOpen ? "bg-white/60 dark:bg-slate-800/60 border border-white dark:border-slate-700/50 shadow-sm hover:shadow-md hover:bg-white dark:hover:bg-slate-800" : "justify-center"
                 )}>
                   <div className="relative group cursor-pointer">
                     <img src={user.photoURL || ''} alt="User" className="w-11 h-11 rounded-[1rem] border-2 border-white shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" referrerPolicy="no-referrer" />
@@ -232,8 +232,8 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                   </div>
                   {isSidebarOpen && (
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-slate-900 truncate leading-tight">{user.displayName}</p>
-                      <button onClick={() => signOut(auth)} className="text-[10px] font-black text-indigo-500 hover:text-indigo-600 uppercase tracking-widest mt-1 inline-flex items-center gap-1 group/out">
+                      <p className="text-sm font-black text-slate-900 dark:text-slate-100 truncate leading-tight">{user.displayName}</p>
+                      <button onClick={() => signOut(auth)} className="text-[10px] font-black text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 uppercase tracking-widest mt-1 inline-flex items-center gap-1 group/out">
                         Sign Out
                         <ChevronRight size={10} className="group-hover/out:translate-x-0.5 transition-transform" />
                       </button>
@@ -256,20 +256,20 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             </div>
 
             {/* Collapse Toggle */}
-            <div className="px-4 py-6 border-t border-indigo-50/50 relative z-10">
+            <div className="px-4 py-6 border-t border-indigo-50/50 dark:border-slate-700/50 relative z-10">
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                 className="flex items-center transition-all duration-500 w-full"
               >
                 {isSidebarOpen ? (
-                  <div className="flex items-center gap-3 w-full p-3.5 rounded-2xl text-slate-400 hover:text-slate-900 hover:bg-white/50 group/toggle">
-                    <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center group-hover/toggle:bg-white transition-colors">
+                  <div className="flex items-center gap-3 w-full p-3.5 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-white/10 group/toggle">
+                    <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover/toggle:bg-white dark:group-hover/toggle:bg-slate-700 transition-colors">
                       <ChevronRight size={16} className="rotate-180" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Minimize Workspace</span>
                   </div>
                 ) : (
-                  <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto hover:bg-white transition-all shadow-sm hover:shadow-md text-slate-400 hover:text-indigo-600 group/toggle">
+                  <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm hover:shadow-md text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 group/toggle">
                     <Menu size={24} className="group-hover/toggle:scale-110 transition-transform" />
                   </div>
                 )}
