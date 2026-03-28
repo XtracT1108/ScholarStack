@@ -10,272 +10,209 @@ import { cn } from './lib/utils';
 import { useTheme } from './lib/ThemeContext';
 
 const LandingPage = ({ onSignIn, isSigningIn }: { onSignIn: () => void, isSigningIn: boolean }) => (
-  <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden relative">
-    {/* Premium Background Architecture */}
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-indigo-200/20 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-100/30 rounded-full blur-[100px] translate-y-1/3" />
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30 L30 0 M30 30 L60 30 M30 30 L30 60 M30 30 L0 30' fill='none' stroke='%234338ca' stroke-width='1'/%3E%3C/svg%3E")`,
-          backgroundSize: '30px 30px'
-        }}
-      />
-    </div>
+  <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden">
 
-    <nav className="fixed top-0 w-full z-50 px-6 py-6 transition-all duration-500">
-      <div className="max-w-7xl mx-auto flex justify-between items-center bg-white/70 backdrop-blur-xl border border-white/50 px-8 py-4 rounded-[2rem] shadow-premium">
+    {/* Navbar */}
+    <nav className="fixed top-0 w-full z-50 px-6 py-5">
+      <div className="max-w-6xl mx-auto flex justify-between items-center bg-white/80 backdrop-blur-xl border border-slate-200/80 px-6 py-3 rounded-2xl shadow-sm">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3 group cursor-pointer"
+          className="flex items-center gap-2.5 group cursor-pointer"
         >
-          <div className="w-10 h-10 bg-slate-900 rounded-2xl flex items-center justify-center text-white shadow-lg transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
-            <Calculator size={20} />
+          <div className="w-8 h-8 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
+            <Calculator size={16} />
           </div>
-          <span className="font-black text-xl tracking-tighter uppercase">Scholar<span className="text-indigo-600">Stack</span></span>
+          <span className="font-bold text-lg tracking-tight">Scholar<span className="text-indigo-600">Stack</span></span>
         </motion.div>
 
-        <div className="flex items-center gap-8">
-          <div className="hidden md:flex items-center gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
-            <a href="#methodology" className="hover:text-indigo-600 transition-colors">Methodology</a>
-            <a href="#intelligence" className="hover:text-indigo-600 transition-colors">Intelligence</a>
-            <a href="#nodes" className="hover:text-indigo-600 transition-colors">Nodes</a>
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-500">
+            <a href="#features" className="hover:text-slate-900 transition-colors">Features</a>
+            <a href="#methodology" className="hover:text-slate-900 transition-colors">Methodology</a>
           </div>
-
           <button
             onClick={onSignIn}
             disabled={isSigningIn}
-            className="bg-indigo-600 text-white px-7 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95 shadow-premium disabled:opacity-50"
+            className="bg-slate-900 text-white px-5 py-2 rounded-xl font-semibold text-sm hover:bg-black transition-all active:scale-95 shadow-sm disabled:opacity-50"
           >
-            {isSigningIn ? 'Connecting...' : 'Secure Intake'}
+            {isSigningIn ? 'Connecting…' : 'Sign In'}
           </button>
         </div>
       </div>
     </nav>
 
-    <main className="relative z-10">
-      {/* Hero Section */}
-      <section className="pt-56 pb-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="space-y-12">
+    <main>
+      {/* Hero */}
+      <section className="pt-36 pb-24 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Left copy */}
+          <div className="space-y-8">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-indigo-100 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm"
             >
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-500">V2.4 Precision Engine Active</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">V2.4 — Precision Engine Active</span>
             </motion.div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-7xl md:text-[6.5rem] font-black tracking-tightest leading-[0.9] text-slate-900"
+                transition={{ delay: 0.08 }}
+                className="text-5xl md:text-6xl font-black tracking-tight leading-[1.05] text-slate-900"
               >
-                The Architecture of <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-indigo-900">Modern Research.</span>
+                Research ranked.<br />
+                <span className="text-indigo-600">Precisely.</span>
               </motion.h1>
 
               <motion.p
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-xl md:text-2xl text-slate-500 max-w-xl font-medium leading-relaxed"
+                transition={{ delay: 0.16 }}
+                className="text-lg text-slate-500 max-w-md leading-relaxed"
               >
-                ScholarStack synthesizes complex Garrett Ranking methodologies into a high-fidelity visual experience.
+                ScholarStack automates Garrett Ranking methodology — from raw data to publication-ready outputs in seconds.
               </motion.p>
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center gap-6"
+              transition={{ delay: 0.24 }}
+              className="flex flex-col sm:flex-row items-center gap-4"
             >
               <button
                 onClick={onSignIn}
                 disabled={isSigningIn}
-                className="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-[1.5rem] font-black text-sm uppercase tracking-widest hover:bg-black transition-all hover:scale-105 active:scale-95 shadow-premium flex items-center gap-3"
+                className="w-full sm:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-bold text-sm hover:bg-black transition-all active:scale-95 shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 Launch Terminal
-                <ChevronRight size={18} className="text-indigo-400" />
+                <ChevronRight size={16} className="text-indigo-400" />
               </button>
-
-              <button className="w-full sm:w-auto px-10 py-5 rounded-[1.5rem] bg-white border border-indigo-100 font-black text-sm uppercase tracking-widest text-slate-600 hover:bg-indigo-50 transition-all">
-                Internal Documentation
+              <button className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-white border border-slate-200 font-bold text-sm text-slate-600 hover:border-slate-300 hover:bg-slate-50 transition-all">
+                Documentation
               </button>
             </motion.div>
           </div>
 
+          {/* Right — preview card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="hidden lg:block relative"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
+            className="hidden lg:block"
           >
-            <div className="grid grid-cols-2 gap-6 p-4">
-              <div className="glass-card p-8 rounded-[3rem] shadow-premium border border-white/80 space-y-6 aspect-square flex flex-col justify-between group hover:bg-white transition-all duration-700">
-                <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 transition-transform group-hover:scale-110 group-hover:rotate-6">
-                  <BarChart3 size={32} />
+            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-8 space-y-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Final Rankings</p>
+                  <p className="text-sm font-bold text-slate-900">Consumer Behavior Study</p>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-2 w-20 bg-indigo-600 rounded-full" />
-                  <div className="h-2 w-full bg-slate-100 rounded-full" />
-                  <div className="h-2 w-2/3 bg-slate-100 rounded-full" />
-                </div>
+                <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Complete</span>
               </div>
-
-              <div className="bg-slate-900 p-8 rounded-[3rem] shadow-premium text-white flex flex-col justify-between aspect-square group hover:scale-[1.02] transition-transform duration-700">
-                <Zap className="text-indigo-400 animate-pulse" size={32} />
-                <div className="space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400">Calculation</p>
-                  <h4 className="text-2xl font-bold leading-none">Instant <br /> Synthesis</h4>
-                </div>
+              <div className="space-y-3">
+                {[
+                  { rank: 1, label: 'Product Quality', score: '87.4', color: 'bg-indigo-500' },
+                  { rank: 2, label: 'Price Sensitivity', score: '74.1', color: 'bg-indigo-400' },
+                  { rank: 3, label: 'Brand Perception', score: '61.8', color: 'bg-indigo-300' },
+                  { rank: 4, label: 'Distribution', score: '55.2', color: 'bg-slate-200' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 + i * 0.08 }}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="w-6 text-xs font-black text-slate-400 text-right">{item.rank}</span>
+                    <div className="flex-1 h-7 bg-slate-50 border border-slate-100 rounded-xl overflow-hidden relative">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${parseInt(item.score)}%` }}
+                        transition={{ delay: 0.6 + i * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        className={`h-full ${item.color} opacity-80`}
+                      />
+                      <span className="absolute inset-0 flex items-center px-3 text-xs font-semibold text-slate-700">{item.label}</span>
+                    </div>
+                    <span className="w-10 text-xs font-black text-slate-900 text-right">{item.score}</span>
+                  </motion.div>
+                ))}
               </div>
-
-              <div className="col-span-2 glass-card p-10 rounded-[3rem] shadow-premium border border-white/80 flex items-center justify-between group hover:bg-white transition-all duration-700">
-                <div className="space-y-4 flex-1">
-                  <div className="flex gap-2">
-                    {[1, 2, 3].map(i => <div key={i} className="h-1.5 w-12 bg-indigo-100 rounded-full" />)}
-                  </div>
-                  <h4 className="text-3xl font-bold text-slate-800 tracking-tight">Publication Portal</h4>
-                  <p className="text-slate-500 font-medium max-w-xs">High-fidelity reports ready for peer review.</p>
-                </div>
-                <div className="w-24 h-24 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white shadow-2xl transition-transform group-hover:scale-110 group-hover:-rotate-12 duration-700">
-                  <Shield size={36} />
-                </div>
+              <div className="pt-2 border-t border-slate-100 flex gap-2">
+                <span className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] font-bold text-slate-500">APA Table</span>
+                <span className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] font-bold text-slate-500">CSV</span>
+                <span className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-[10px] font-bold text-slate-500">Excel</span>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Bento Intelligence Grid */}
-      <section id="intelligence" className="py-32 px-6 bg-slate-900 text-white relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              whileHover={{ y: -10 }}
-              className="md:col-span-2 p-12 rounded-[3.5rem] bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 flex flex-col justify-between h-[500px]"
-            >
-              <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
-                  <Zap size={32} />
-                </div>
-                <h3 className="text-5xl font-black tracking-tighter">Garrett Synthesis Engine</h3>
-                <p className="text-slate-400 text-xl max-w-xl">Automate complex statistical ranking with zero latency. Our engine processes hundreds of data points using verified academic formulas.</p>
-              </div>
-              <div className="flex gap-4">
-                <span className="px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-black uppercase tracking-widest">Statistical Rigor</span>
-                <span className="px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-black uppercase tracking-widest">Real-time</span>
-              </div>
-            </motion.div>
+      {/* Feature strip */}
+      <section id="features" className="py-20 px-6 border-t border-slate-100">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-500 mb-3">Capabilities</p>
+            <h2 className="text-3xl font-black tracking-tight text-slate-900">Built for academic rigour.</h2>
+          </motion.div>
 
-            <motion.div
-              whileHover={{ y: -10 }}
-              className="p-12 rounded-[3.5rem] bg-indigo-600 border border-indigo-500 flex flex-col justify-between h-[500px]"
-            >
-              <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-white/20 border border-white/40 flex items-center justify-center text-white">
-                  <BarChart3 size={32} />
+          <div id="methodology" className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: Zap, title: 'Garrett Synthesis', desc: 'Automate complex statistical ranking using verified academic formulas. Results in seconds.' },
+              { icon: BarChart3, title: 'HD Visual Reports', desc: 'Generate publication-quality bar, radar, and pie charts with one click — export-ready.' },
+              { icon: Shield, title: 'Secure & Private', desc: 'Firebase-backed cloud storage with per-user data isolation. Sessions are always private.' }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="group p-7 bg-white border border-slate-200 rounded-2xl hover:border-indigo-200 hover:shadow-sm transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-5 transition-transform duration-300 group-hover:scale-105">
+                  <item.icon size={20} />
                 </div>
-                <h3 className="text-5xl font-black tracking-tighter">HD Export</h3>
-                <p className="text-indigo-100 text-xl">Generate publication-quality reports instantly.</p>
-              </div>
-              <div className="w-full h-32 bg-white/10 rounded-3xl border border-white/20 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-x-0 top-0 h-4 bg-white/20" />
-                <div className="p-6 space-y-2">
-                  <div className="h-2 bg-white/40 w-3/4 rounded" />
-                  <div className="h-2 bg-white/20 w-1/2 rounded" />
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -10 }}
-              className="p-10 rounded-[3.5rem] bg-white text-slate-900 border border-slate-200 flex flex-col gap-8 h-[400px] justify-center"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-900">
-                <Shield size={28} />
-              </div>
-              <h4 className="text-3xl font-black tracking-tighter">Auth Core</h4>
-              <p className="text-slate-500 text-lg leading-snug">Secure cloud infrastructure powered by Firebase.</p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -10 }}
-              className="md:col-span-2 p-10 rounded-[3.5rem] bg-gradient-to-br from-slate-100 to-slate-200 text-slate-900 border border-slate-300/50 flex flex-col md:flex-row items-center gap-12 h-[400px]"
-            >
-              <div className="flex-1 space-y-4">
-                <h4 className="text-4xl font-black tracking-tighter">Collaborative Terminal</h4>
-                <p className="text-slate-600 text-lg">Cross-team research coordination and standardized data entry modules.</p>
-                <div className="flex gap-2 pt-4">
-                  {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-300 overflow-hidden shadow-sm">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i}`} alt="user" />
-                    </div>
-                  ))}
-                  <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-black shadow-sm">+12</div>
-                </div>
-              </div>
-              <div className="hidden lg:block w-72 h-48 bg-white rounded-[2rem] shadow-xl border border-slate-200 overflow-hidden relative">
-                <div className="absolute top-0 w-full h-2 bg-slate-50" />
-                <div className="p-8 space-y-4">
-                  <div className="h-3 bg-slate-100 rounded-full w-full" />
-                  <div className="h-3 bg-slate-100 rounded-full w-5/6" />
-                  <div className="h-3 bg-indigo-50 rounded-full w-4/6" />
-                  <div className="pt-4 flex justify-between">
-                    <div className="h-8 w-24 bg-slate-900 rounded-xl" />
-                    <div className="h-8 w-8 bg-indigo-600 rounded-xl" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+                <h3 className="font-bold text-slate-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-24 px-6 border-t border-slate-200 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-slate-900 rounded-xl flex items-center justify-center text-white">
-                <Calculator size={16} />
-              </div>
-              <span className="font-black text-xl tracking-tighter uppercase">ScholarStack</span>
+      <footer className="py-12 px-6 border-t border-slate-100 bg-white">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+              <Calculator size={14} />
             </div>
-            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em] leading-relaxed">
-              The future of academic synthesis. <br />
-              © 2026 Xtract Intelligence Systems
-            </p>
+            <span className="font-bold text-slate-900">ScholarStack</span>
+            <span className="text-slate-300 text-xs">·</span>
+            <span className="text-xs text-slate-400">© 2026 Xtract Intelligence</span>
           </div>
-
-          <div className="flex gap-24">
-            <div className="space-y-6">
-              <h5 className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">Core</h5>
-              <ul className="space-y-3 text-[11px] font-black uppercase tracking-widest text-slate-600">
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Terminal</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Methods</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">API</a></li>
-              </ul>
-            </div>
-            <div className="space-y-6">
-              <h5 className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">Protocols</h5>
-              <ul className="space-y-3 text-[11px] font-black uppercase tracking-widest text-slate-600">
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Safety</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Legal</a></li>
-              </ul>
-            </div>
+          <div className="flex items-center gap-6 text-xs font-semibold text-slate-400">
+            <a href="#" className="hover:text-slate-600 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-slate-600 transition-colors">Terms</a>
+            <a href="https://github.com/XtracT1108/ScholarStack" target="_blank" rel="noreferrer" className="hover:text-slate-600 transition-colors flex items-center gap-1.5">
+              <Github size={14} /> GitHub
+            </a>
           </div>
         </div>
       </footer>
     </main>
-  </div>);
+  </div>
+);
 
 const SettingsPanel = () => {
   const { isDark, toggle } = useTheme();

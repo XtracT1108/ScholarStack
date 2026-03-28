@@ -109,36 +109,36 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
   );
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12">
+    <div className="max-w-7xl mx-auto space-y-10">
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {deletingId && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="glass-card bg-white/95 rounded-[2rem] p-10 max-w-sm w-full shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] space-y-8 text-center"
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              className="bg-white dark:bg-slate-900 rounded-2xl p-8 max-w-sm w-full border border-slate-200 dark:border-slate-700 shadow-xl space-y-6 text-center"
             >
-              <div className="w-20 h-20 bg-red-50 rounded-3xl flex items-center justify-center text-red-500 mx-auto shadow-inner">
-                <Trash2 size={40} />
+              <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mx-auto">
+                <Trash2 size={28} />
               </div>
-              <div className="space-y-3">
-                <h3 className="text-2xl font-bold text-slate-900 tracking-tight">Erase Analysis?</h3>
-                <p className="text-slate-500 text-sm leading-relaxed font-medium">
-                  This action is irreversible. All research data associated with this session will be permanently purged from the archive.
+              <div className="space-y-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Delete session?</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">
+                  This can't be undone. All research data for this session will be permanently removed.
                 </p>
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <button
                   onClick={() => setDeletingId(null)}
-                  className="flex-1 px-6 py-4 rounded-2xl font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all active:scale-95"
+                  className="flex-1 px-5 py-3 rounded-xl font-semibold text-sm text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all active:scale-95"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmDelete}
-                  className="flex-1 px-6 py-4 rounded-2xl font-bold text-white bg-red-500 hover:bg-red-600 transition-all active:scale-95 shadow-xl shadow-red-100"
+                  className="flex-1 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-red-500 hover:bg-red-600 transition-all active:scale-95"
                 >
                   Delete
                 </button>
@@ -149,261 +149,161 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
       </AnimatePresence>
 
       {/* Welcome Section */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-        <div className="space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3"
-          >
-            <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-indigo-100">
-              System Active
-            </span>
-            <div className="h-px w-12 bg-indigo-100" />
-          </motion.div>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div>
           <motion.h1
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-6xl font-display font-black tracking-tight text-slate-900"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-slate-100"
           >
-            Scholar <span className="text-indigo-600">Terminal</span>.
+            Good morning, <span className="text-indigo-600">{auth.currentUser?.displayName?.split(' ')[0] || 'Researcher'}</span>.
           </motion.h1>
-          <p className="text-slate-500 font-medium text-xl max-w-2xl leading-relaxed">
-            Welcome, <span className="text-slate-900 font-bold">{auth.currentUser?.displayName?.split(' ')[0] || 'Researcher'}</span>.
-            Your academic environment is synchronized and ready for analysis.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 }}
+            className="mt-1 text-slate-500 dark:text-slate-400 text-sm"
+          >
+            {sessions.length} session{sessions.length !== 1 ? 's' : ''} in your research archive.
+          </motion.p>
         </div>
         <motion.button
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12 }}
+          whileTap={{ scale: 0.97 }}
           onClick={onNewSession}
-          className="bg-slate-900 text-white px-10 py-5 rounded-2xl font-black text-sm flex items-center justify-center gap-4 hover:bg-black shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)] transition-all group shrink-0"
+          className="bg-slate-900 dark:bg-indigo-600 text-white px-7 py-3 rounded-2xl font-bold text-sm flex items-center gap-2.5 hover:bg-black dark:hover:bg-indigo-700 transition-all shrink-0 shadow-sm"
         >
-          <Plus size={22} className="text-indigo-400 group-hover:rotate-90 transition-transform duration-500" />
-          GENERATE NEW ANALYSIS
+          <Plus size={18} />
+          New Analysis
         </motion.button>
       </div>
 
-      {/* Bento Grid Analytics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 auto-rows-[240px]">
-        {/* Total Research - Mini Bento */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="md:col-span-2 glass-card p-10 rounded-[2.5rem] border border-white/60 shadow-sm flex flex-col justify-between group hover:border-indigo-300 transition-all duration-700 relative overflow-hidden"
-        >
-          <div className="relative z-10">
-            <div className="w-16 h-16 bg-indigo-50/50 rounded-2xl flex items-center justify-center text-indigo-600 mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
-              <Calculator size={32} />
+      {/* Stat Row */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.16 }}
+        className="grid grid-cols-3 gap-4"
+      >
+        {[
+          { label: 'Total Sessions', value: sessions.length.toString().padStart(2, '0'), icon: Calculator, color: 'text-indigo-600 bg-indigo-50' },
+          { label: 'Engine Status', value: 'Active', icon: ArrowUpRight, color: 'text-emerald-600 bg-emerald-50' },
+          { label: 'Live Sync', value: 'Stable', icon: History, color: 'text-slate-600 bg-slate-100' },
+        ].map((stat, i) => (
+          <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 flex items-center gap-4">
+            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
+              <stat.icon size={18} />
             </div>
-            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Research Index</p>
-              <p className="text-6xl font-display font-black text-slate-900 tracking-tighter">
-                {sessions.length.toString().padStart(2, '0')}
-              </p>
+            <div className="min-w-0">
+              <p className="text-xs text-slate-400 dark:text-slate-500 truncate">{stat.label}</p>
+              <p className="font-bold text-slate-900 dark:text-slate-100 text-lg leading-tight">{stat.value}</p>
             </div>
           </div>
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full -translate-x-[-30%] -translate-y-[30%] opacity-50 blur-3xl group-hover:bg-indigo-100 transition-colors" />
-        </motion.div>
+        ))}
+      </motion.div>
 
-        {/* Global Access - Dynamic Bento */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="md:col-span-2 bg-slate-900 p-10 rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] text-white flex flex-col justify-between group cursor-pointer overflow-hidden relative"
-        >
-          <div className="relative z-10">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-[10px] font-black text-indigo-300 uppercase tracking-[0.2em] mb-2">Compute Engine</p>
-                <p className="text-5xl font-display font-black text-white tracking-tight">Active Elite</p>
-              </div>
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-indigo-400 backdrop-blur-md">
-                <ArrowUpRight size={24} />
-              </div>
-            </div>
-            <p className="text-slate-400 font-medium mt-4 text-sm max-w-[180px]">
-              Advanced Garrett Matrix processing enabled for all projects.
-            </p>
-          </div>
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="h-2 flex-1 bg-slate-800 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "65%" }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                className="h-full bg-indigo-500 shadow-[0_0_12px_rgba(99,102,241,0.5)]"
-              />
-            </div>
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">65% Load</span>
-          </div>
-          <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-indigo-500 rounded-full opacity-10 blur-[80px] group-hover:opacity-20 transition-opacity" />
-        </motion.div>
-
-        {/* Secondary Stats Cluster */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="md:col-span-1 glass-card p-8 rounded-[2.5rem] border border-white/60 shadow-sm flex flex-col items-center justify-center gap-4 group hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-500"
-        >
-          <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 shadow-sm group-hover:scale-110 transition-transform">
-            <History size={24} />
-          </div>
-          <div className="text-center">
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Live Sync</p>
-            <p className="text-2xl font-display font-black text-slate-900">Stable</p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="md:col-span-3 glass-card p-10 rounded-[2.5rem] border border-white/60 shadow-sm overflow-hidden flex flex-col lg:flex-row lg:items-center justify-between gap-8 group"
-        >
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display font-black text-slate-900">Garrett Ranking Specialized.</h3>
-            <p className="text-slate-500 font-medium text-sm leading-relaxed max-w-md">
-              ScholarStack uses high-precision matrix calculations to prioritize academic factors.
-              Our algorithms ensure mathematical rigor in every result.
-            </p>
-          </div>
-          <div className="flex -space-x-4">
-            {[1, 2, 3, 4].map(idx => (
-              <div key={idx} className="w-12 h-12 rounded-full bg-slate-100 border-4 border-white flex items-center justify-center shadow-lg">
-                <div className={`w-full h-full rounded-full bg-indigo-${idx}00 opacity-20`} />
-              </div>
-            ))}
-            <div className="w-12 h-12 rounded-full bg-slate-900 border-4 border-white flex items-center justify-center shadow-lg text-[10px] text-white font-black">
-              AI+
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Library Archive Terminal */}
-      <div className="glass-card rounded-[3rem] border border-white/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden min-h-[500px] flex flex-col">
-        <div className="p-10 md:p-12 border-b border-white/40 flex flex-col md:flex-row md:items-center justify-between gap-8 bg-white/40">
-          <div className="flex items-center gap-6">
-            <div className="w-14 h-14 bg-slate-900 rounded-[1.25rem] flex items-center justify-center shadow-2xl">
-              <History size={28} className="text-indigo-400" />
-            </div>
-            <div className="space-y-1">
-              <h2 className="text-3xl font-display font-black text-slate-900 tracking-tight">
-                {showAll ? 'Academic Archive' : 'Recent Collections'}
-              </h2>
+      {/* Sessions List */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden">
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+              {showAll ? 'All Sessions' : 'Recent Sessions'}
+            </h2>
+            {!showAll && filteredSessions.length > 5 && (
               <button
-                onClick={() => setShowAll(!showAll)}
-                className="text-[10px] font-black text-indigo-600 hover:text-indigo-700 uppercase tracking-[0.2em] flex items-center gap-2 group/btn"
+                onClick={() => setShowAll(true)}
+                className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1 mt-0.5"
               >
-                {showAll ? 'Show Recent Only' : 'Explore Extended Library'}
-                <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                View all {filteredSessions.length} <ChevronRight size={12} />
               </button>
-            </div>
+            )}
           </div>
-
-          <div className="relative group max-w-sm w-full">
-            <Search size={20} className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" />
+          <div className="relative">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Query library repository..."
-              className="bg-white/80 backdrop-blur-xl border border-white/60 rounded-[1.25rem] pl-14 pr-7 py-5 text-sm font-medium focus:ring-8 focus:ring-indigo-500/5 focus:border-indigo-500/30 outline-none w-full transition-all shadow-inner"
+              placeholder="Search sessions…"
+              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 dark:text-slate-100 placeholder:text-slate-400 w-56 transition-all"
             />
           </div>
         </div>
 
-        <div className="flex-1 divide-y divide-slate-50">
+        {/* Body */}
+        <div className="divide-y divide-slate-50 dark:divide-slate-800">
           {loading ? (
-            <div className="h-[400px] flex flex-col items-center justify-center gap-6">
-              <div className="relative">
-                <div className="w-12 h-12 border-[3px] border-indigo-100 rounded-full" />
-                <div className="absolute top-0 w-12 h-12 border-[3px] border-indigo-600 border-t-transparent rounded-full animate-spin shadow-lg shadow-indigo-100" />
-              </div>
-              <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] animate-pulse">Syncing Database...</p>
+            <div className="py-16 flex flex-col items-center justify-center gap-4">
+              <div className="w-10 h-10 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+              <p className="text-sm text-slate-400">Loading sessions…</p>
             </div>
           ) : (showAll ? filteredSessions : filteredSessions.slice(0, 5)).length > 0 ? (
-            <div className="grid grid-cols-1">
-              {(showAll ? filteredSessions : filteredSessions.slice(0, 5)).map((session, idx) => (
-                <motion.div
-                  key={session.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
-                  onClick={() => onViewSession(session.id)}
-                  className="p-8 md:p-10 flex items-center justify-between cursor-pointer group border-l-[6px] border-transparent hover:border-indigo-600 transition-all duration-300"
-                >
-                  <div className="flex items-center gap-8 min-w-0">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-slate-300 shadow-sm border border-slate-100 group-hover:border-indigo-100 group-hover:text-indigo-600 group-hover:scale-105 transition-all duration-500">
-                      <FileText size={28} />
-                    </div>
-                    <div className="min-w-0 space-y-2">
-                      <h3 className="text-xl font-bold text-slate-900 truncate group-hover:text-indigo-600 transition-colors tracking-tight">
-                        {session.name}
-                      </h3>
-                      <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-2">
-                          <Calendar size={14} className="text-slate-400" />
-                          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                            {session.createdAt?.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                          </span>
-                        </div>
-                        <div className="h-1 w-1 bg-slate-200 rounded-full" />
-                        <div className="px-3 py-1 bg-indigo-50/50 rounded-lg text-[10px] font-black text-indigo-600 uppercase tracking-widest border border-indigo-100/50">
-                          {session.factors.length} MATRIX FACTORS
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <button
-                      onClick={(e) => handleDelete(session.id, e)}
-                      className="p-4 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all md:opacity-0 group-hover:opacity-100 active:scale-90"
-                    >
-                      <Trash2 size={22} />
-                    </button>
-                    <div className="w-12 h-12 rounded-2xl border border-slate-200 flex items-center justify-center text-slate-300 group-hover:border-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-[0_12px_24px_-8px_rgba(79,70,229,0.4)] transition-all duration-500">
-                      <ChevronRight size={24} />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="py-32 text-center space-y-8">
-              <div className="w-32 h-32 bg-slate-50/80 backdrop-blur-md rounded-[3rem] border border-white flex items-center justify-center mx-auto text-slate-200 shadow-inner group-hover:scale-110 transition-transform duration-700">
-                <History size={64} />
-              </div>
-              <div className="space-y-3">
-                <p className="text-2xl font-display font-black text-slate-900 uppercase tracking-tight">Archive Repository Empty</p>
-                <p className="text-slate-500 font-medium max-w-xs mx-auto leading-relaxed">
-                  Your Garret Ranking analytics will be archived here once a session is completed.
-                </p>
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={onNewSession}
-                className="text-indigo-600 font-black border-b-[3px] border-indigo-100 hover:border-indigo-600 transition-all pb-1 uppercase tracking-[0.2em] text-[10px]"
+            (showAll ? filteredSessions : filteredSessions.slice(0, 5)).map((session, idx) => (
+              <motion.div
+                key={session.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.04 }}
+                onClick={() => onViewSession(session.id)}
+                className="px-6 py-4 flex items-center justify-between cursor-pointer group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
               >
-                Start Your First Master Research
-              </motion.button>
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 shrink-0 group-hover:bg-indigo-100 transition-colors">
+                    <FileText size={17} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm text-slate-900 dark:text-slate-100 truncate group-hover:text-indigo-600 transition-colors">
+                      {session.name}
+                    </p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <Calendar size={11} className="text-slate-400" />
+                      <span className="text-xs text-slate-400">
+                        {session.createdAt?.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </span>
+                      <span className="text-slate-200 dark:text-slate-700">·</span>
+                      <span className="text-xs text-slate-400">{session.factors.length} factors</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={(e) => handleDelete(session.id, e)}
+                    className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                  <ChevronRight size={16} className="text-slate-300 group-hover:text-indigo-500 transition-colors" />
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <div className="py-20 text-center space-y-4">
+              <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto text-slate-300 dark:text-slate-600">
+                <History size={28} />
+              </div>
+              <div>
+                <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm">No sessions yet</p>
+                <p className="text-slate-400 text-xs mt-1">Your Garrett Ranking sessions will appear here.</p>
+              </div>
+              <button
+                onClick={onNewSession}
+                className="text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors"
+              >
+                Start first analysis →
+              </button>
             </div>
           )}
         </div>
 
-        {!loading && filteredSessions.length > 5 && !showAll && (
-          <div className="p-10 text-center bg-slate-50/30 border-t border-slate-100">
+        {!loading && filteredSessions.length > 5 && showAll && (
+          <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 text-center">
             <button
-              onClick={() => setShowAll(true)}
-              className="px-8 py-3 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:border-indigo-300 hover:text-indigo-600 transition-all shadow-sm"
+              onClick={() => setShowAll(false)}
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
             >
-              Access Complete Repository
+              Show less
             </button>
           </div>
         )}
