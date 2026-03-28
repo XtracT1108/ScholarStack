@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "RankingSession": {
+      "title": "Ranking Session",
+      "description": "A session containing Garrett Ranking data and results",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner UID" },
+        "name": { "type": "string", "description": "Session name" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "factors": { "type": "array", "items": { "type": "string" }, "description": "List of factors being ranked" },
+        "respondentData": { "type": "array", "items": { "type": "object" }, "description": "Raw ranking data from respondents" },
+        "results": { "type": "object", "description": "Calculated Garrett Ranking results" }
+      },
+      "required": ["uid", "name", "createdAt", "factors", "respondentData"]
+    }
+  },
+  "firestore": {
+    "/sessions/{sessionId}": {
+      "schema": "RankingSession",
+      "description": "User ranking sessions"
+    }
+  }
+}
