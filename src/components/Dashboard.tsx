@@ -26,7 +26,7 @@ interface Session {
 
 export const Dashboard = ({ onNewSession, onViewSession, userId }: {
   onNewSession: () => void;
-  onViewSession: (id: string) => void;
+  onViewSession: (session: any) => void;
   userId?: string;
 }) => {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -39,28 +39,6 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
     const fetchSessions = async () => {
       const uid = userId || auth.currentUser?.uid;
       if (!uid) {
-        setLoading(false);
-        return;
-      }
-
-      if (uid === 'guest-user') {
-        // Provide mock data for localhost preview so it's not empty
-        setSessions([
-          {
-            id: 'mock-session-1',
-            name: 'Consumer Behavior Analysis (Mock)',
-            createdAt: { toDate: () => new Date(Date.now() - 86400000 * 2) },
-            factors: ['Price', 'Quality', 'Brand', 'Packaging'],
-            results: []
-          },
-          {
-            id: 'mock-session-2',
-            name: 'Employee Engagement Survey (Mock)',
-            createdAt: { toDate: () => new Date(Date.now() - 86400000 * 5) },
-            factors: ['Salary', 'Culture', 'Work-Life Balance', 'Growth'],
-            results: []
-          }
-        ]);
         setLoading(false);
         return;
       }
@@ -118,13 +96,13 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
-              className="bg-white dark:bg-slate-900 rounded-2xl p-8 max-w-sm w-full border border-slate-200 dark:border-slate-700 shadow-xl space-y-6 text-center"
+              className="bg-slate-800 rounded-2xl p-8 max-w-sm w-full border border-slate-700 shadow-xl space-y-6 text-center"
             >
               <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 mx-auto">
                 <Trash2 size={28} />
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">Delete session?</h3>
+                <h3 className="text-lg font-bold text-white">Delete session?</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">
                   This can't be undone. All research data for this session will be permanently removed.
                 </p>
@@ -132,7 +110,7 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeletingId(null)}
-                  className="flex-1 px-5 py-3 rounded-xl font-semibold text-sm text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all active:scale-95"
+                  className="flex-1 px-5 py-3 rounded-xl font-semibold text-sm text-slate-300 bg-slate-700 hover:bg-slate-600 transition-all duration-300 active:scale-95"
                 >
                   Cancel
                 </button>
@@ -154,15 +132,15 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-slate-100"
+            className="text-3xl md:text-4xl font-black tracking-tight text-white"
           >
-            Good morning, <span className="text-indigo-600">{auth.currentUser?.displayName?.split(' ')[0] || 'Researcher'}</span>.
+            Good morning, <span className="text-sky-400">{auth.currentUser?.displayName?.split(' ')[0] || 'Researcher'}</span>.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08 }}
-            className="mt-1 text-slate-500 dark:text-slate-400 text-sm"
+            className="mt-1 text-slate-500 text-slate-400 text-sm"
           >
             {sessions.length} session{sessions.length !== 1 ? 's' : ''} in your research archive.
           </motion.p>
@@ -173,7 +151,7 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
           transition={{ delay: 0.12 }}
           whileTap={{ scale: 0.97 }}
           onClick={onNewSession}
-          className="bg-slate-900 dark:bg-indigo-600 text-white px-7 py-3 rounded-2xl font-bold text-sm flex items-center gap-2.5 hover:bg-black dark:hover:bg-indigo-700 transition-all shrink-0 shadow-sm"
+          className="bg-sky-400 text-slate-950 px-7 py-3 rounded-[1rem] font-bold text-sm flex items-center gap-2.5 hover:bg-sky-500 hover:scale-105 transition-all duration-300 ease-in-out shrink-0 shadow-sm"
         >
           <Plus size={18} />
           New Analysis
@@ -188,34 +166,34 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
         className="grid grid-cols-3 gap-4"
       >
         {[
-          { label: 'Total Sessions', value: sessions.length.toString().padStart(2, '0'), icon: Calculator, color: 'text-indigo-600 bg-indigo-50' },
-          { label: 'Engine Status', value: 'Active', icon: ArrowUpRight, color: 'text-emerald-600 bg-emerald-50' },
-          { label: 'Live Sync', value: 'Stable', icon: History, color: 'text-slate-600 bg-slate-100' },
+          { label: 'Total Sessions', value: sessions.length.toString().padStart(2, '0'), icon: Calculator, color: 'text-sky-400 bg-sky-900/20' },
+          { label: 'Engine Status', value: 'Active', icon: ArrowUpRight, color: 'text-emerald-400 bg-emerald-900/20' },
+          { label: 'Live Sync', value: 'Stable', icon: History, color: 'text-slate-300 bg-slate-700/50' },
         ].map((stat, i) => (
-          <div key={i} className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 flex items-center gap-4">
+          <div key={i} className="bg-slate-800 border border-slate-700 rounded-2xl p-5 flex items-center gap-4">
             <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
               <stat.icon size={18} />
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-slate-400 dark:text-slate-500 truncate">{stat.label}</p>
-              <p className="font-bold text-slate-900 dark:text-slate-100 text-lg leading-tight">{stat.value}</p>
+              <p className="text-xs text-slate-400 text-slate-500 truncate">{stat.label}</p>
+              <p className="font-bold text-white text-lg leading-tight">{stat.value}</p>
             </div>
           </div>
         ))}
       </motion.div>
 
       {/* Sessions List */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl overflow-hidden">
+      <div className="bg-slate-800 border border-slate-700 rounded-2xl overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="px-6 py-4 border-b border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="font-bold text-slate-900 dark:text-slate-100 text-base">
+            <h2 className="font-bold text-white text-base">
               {showAll ? 'All Sessions' : 'Recent Sessions'}
             </h2>
             {!showAll && filteredSessions.length > 5 && (
               <button
                 onClick={() => setShowAll(true)}
-                className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1 mt-0.5"
+                className="text-xs text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 mt-0.5 transition-colors"
               >
                 View all {filteredSessions.length} <ChevronRight size={12} />
               </button>
@@ -227,16 +205,16 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search sessions…"
-              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 dark:text-slate-100 placeholder:text-slate-400 w-56 transition-all"
+              className="bg-slate-950 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-400 text-slate-100 placeholder:text-slate-400 w-56 transition-all duration-300"
             />
           </div>
         </div>
 
         {/* Body */}
-        <div className="divide-y divide-slate-50 dark:divide-slate-800">
+        <div className="divide-y divide-slate-700">
           {loading ? (
             <div className="py-16 flex flex-col items-center justify-center gap-4">
-              <div className="w-10 h-10 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-10 h-10 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
               <p className="text-sm text-slate-400">Loading sessions…</p>
             </div>
           ) : (showAll ? filteredSessions : filteredSessions.slice(0, 5)).length > 0 ? (
@@ -246,15 +224,15 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.04 }}
-                onClick={() => onViewSession(session.id)}
-                className="px-6 py-4 flex items-center justify-between cursor-pointer group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                onClick={() => onViewSession(session)}
+                className="px-6 py-4 flex items-center justify-between cursor-pointer group hover:bg-slate-700 transition-all duration-300 ease-in-out"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 shrink-0 group-hover:bg-indigo-100 transition-colors">
+                  <div className="w-9 h-9 rounded-xl bg-sky-900/20 flex items-center justify-center text-sky-400 shrink-0 group-hover:bg-sky-900/40 transition-colors">
                     <FileText size={17} />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-semibold text-sm text-slate-900 dark:text-slate-100 truncate group-hover:text-indigo-600 transition-colors">
+                    <p className="font-semibold text-sm text-slate-100 truncate group-hover:text-sky-400 transition-colors">
                       {session.name}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -262,7 +240,7 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
                       <span className="text-xs text-slate-400">
                         {session.createdAt?.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                       </span>
-                      <span className="text-slate-200 dark:text-slate-700">·</span>
+                      <span className="text-slate-200 text-slate-200">·</span>
                       <span className="text-xs text-slate-400">{session.factors.length} factors</span>
                     </div>
                   </div>
@@ -270,26 +248,26 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
                 <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={(e) => handleDelete(session.id, e)}
-                    className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                    className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-950/50 rounded-xl transition-all duration-300 opacity-0 group-hover:opacity-100"
                   >
                     <Trash2 size={15} />
                   </button>
-                  <ChevronRight size={16} className="text-slate-300 group-hover:text-indigo-500 transition-colors" />
+                  <ChevronRight size={16} className="text-slate-400 group-hover:text-sky-400 transition-all duration-300" />
                 </div>
               </motion.div>
             ))
           ) : (
             <div className="py-20 text-center space-y-4">
-              <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto text-slate-300 dark:text-slate-600">
+              <div className="w-14 h-14 bg-slate-700 rounded-2xl flex items-center justify-center mx-auto text-slate-300">
                 <History size={28} />
               </div>
               <div>
-                <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm">No sessions yet</p>
+                <p className="font-semibold text-slate-100 text-sm">No sessions yet</p>
                 <p className="text-slate-400 text-xs mt-1">Your Garrett Ranking sessions will appear here.</p>
               </div>
               <button
                 onClick={onNewSession}
-                className="text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors"
+                className="text-sky-400 hover:text-sky-300 font-semibold text-sm transition-colors"
               >
                 Start first analysis →
               </button>
@@ -298,10 +276,10 @@ export const Dashboard = ({ onNewSession, onViewSession, userId }: {
         </div>
 
         {!loading && filteredSessions.length > 5 && showAll && (
-          <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 text-center">
+          <div className="px-6 py-4 border-t border-slate-700 text-center">
             <button
               onClick={() => setShowAll(false)}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700 hover:text-slate-300 transition-colors"
             >
               Show less
             </button>
