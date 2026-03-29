@@ -16,7 +16,6 @@ import {
 import { cn } from '../lib/utils';
 import { auth, signInWithGoogle } from '../lib/firebase';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
-import { useTheme } from '../lib/ThemeContext';
 
 interface NavItemProps {
   icon: React.ElementType;
@@ -31,23 +30,23 @@ const NavItem = ({ icon: Icon, label, active, onClick, collapsed }: NavItemProps
   <button
     onClick={onClick}
     className={cn(
-      "flex items-center gap-3 w-full p-3.5 rounded-2xl transition-all duration-500 group relative overflow-hidden",
+      "flex items-center gap-3 w-full p-3.5 rounded-2xl transition-all duration-300 ease-in-out group relative overflow-hidden",
       active
-        ? "bg-indigo-600 dark:bg-slate-800 text-white shadow-premium"
-        : "text-slate-500 dark:text-slate-400 hover:bg-white/50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-slate-100"
+        ? "bg-slate-800 text-sky-400 shadow-premium"
+        : "text-slate-400 hover:bg-slate-800 hover:text-slate-100"
     )}
   >
     {active && (
       <motion.div
         layoutId="nav-glow"
-        className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 opacity-50"
+        className="absolute inset-0 bg-gradient-to-tr from-sky-500/10 to-sky-400/5 opacity-100"
       />
     )}
-    <Icon size={22} className={cn("shrink-0 relative z-10 transition-transform duration-500", active ? "text-indigo-200" : "group-hover:scale-110 group-hover:rotate-6")} />
+    <Icon size={22} className={cn("shrink-0 relative z-10 transition-transform duration-300", active ? "text-sky-400" : "group-hover:scale-110 group-hover:rotate-6")} />
     {!collapsed && (
       <span className={cn(
         "font-display font-semibold text-sm tracking-tight relative z-10 transition-all duration-500",
-        active ? "opacity-100 translate-x-0 text-white" : "opacity-80 group-hover:opacity-100 group-hover:translate-x-1"
+        active ? "opacity-100 translate-x-0 text-slate-100" : "opacity-80 group-hover:opacity-100 group-hover:translate-x-1"
       )}>
         {label}
       </span>
@@ -55,7 +54,7 @@ const NavItem = ({ icon: Icon, label, active, onClick, collapsed }: NavItemProps
     {!collapsed && active && (
       <motion.div
         layoutId="active-dot"
-        className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-300 relative z-10 shadow-[0_0_10px_rgba(129,140,248,0.8)]"
+        className="ml-auto w-1.5 h-1.5 rounded-full bg-sky-400 relative z-10 shadow-[0_0_10px_rgba(56,189,248,0.8)]"
       />
     )}
   </button>
@@ -70,7 +69,6 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
-  const { isDark, toggle: toggleTheme } = useTheme();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => setUser(u));
@@ -100,10 +98,10 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
   ];
 
   return (
-    <div className="min-h-screen bg-transparent flex text-slate-900 dark:text-slate-100 font-sans selection:bg-indigo-100 selection:text-indigo-700 overflow-hidden relative">
+    <div className="min-h-screen bg-slate-950 flex text-slate-100 font-sans selection:bg-sky-500/30 selection:text-sky-100 overflow-hidden relative">
       {/* Decorative Background Elements */}
-      <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-purple-100/30 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-sky-900/20 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-slate-800/40 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Desktop Sidebar */}
       {!isMobile && (
@@ -111,14 +109,14 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
           <motion.div
             initial={false}
             animate={{ width: isSidebarOpen ? 280 : 92 }}
-            className="glass-card dark:bg-slate-900/80 dark:border-slate-700/50 h-full flex flex-col rounded-[3rem] border border-white/60 shadow-premium overflow-hidden relative"
+            className="glass-card bg-slate-950/80 border border-slate-800 h-full flex flex-col rounded-[3rem] shadow-premium overflow-hidden relative"
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             {/* Sidebar Background Accents */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-sky-900/10 to-transparent pointer-events-none" />
 
             {/* Logo Section */}
-            <div className="p-8 pb-4 relative z-10">
+            <div className={cn("relative z-10 flex border-b border-slate-800/50 pb-6 mb-2 transition-all duration-300", isSidebarOpen ? "p-8 justify-start" : "p-4 pt-8 justify-center")}>
               <AnimatePresence mode="wait">
                 {isSidebarOpen ? (
                   <motion.div
@@ -128,17 +126,17 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                     exit={{ opacity: 0, x: -10 }}
                     className="flex items-center gap-4"
                   >
-                    <div className="w-12 h-12 bg-slate-900 rounded-[1.25rem] flex items-center justify-center text-white shadow-2xl relative group overflow-hidden active:scale-95 transition-transform">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <Calculator size={24} className="text-indigo-400 relative z-10" />
+                    <div className="w-12 h-12 bg-slate-800 rounded-[1.25rem] flex items-center justify-center text-slate-100 shadow-2xl relative group overflow-hidden active:scale-95 transition-all duration-300 ease-in-out">
+                      <div className="absolute inset-0 bg-sky-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                      <Calculator size={24} className="text-sky-400 relative z-10" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-display font-black text-2xl leading-none tracking-tighter bg-gradient-to-br from-indigo-400 via-slate-200 to-slate-400 dark:from-indigo-300 dark:via-white dark:to-slate-300 bg-clip-text text-transparent">
+                      <span className="font-display font-black text-2xl leading-none tracking-tighter bg-gradient-to-br from-sky-400 to-slate-200 bg-clip-text text-transparent">
                         ScholarStack
                       </span>
                       <div className="flex items-center gap-1.5 mt-1.5">
-                        <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em]">Research Engine</span>
+                        <div className="w-1 h-1 rounded-full bg-sky-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Research Engine</span>
                       </div>
                     </div>
                   </motion.div>
@@ -147,25 +145,25 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                     key="logo-collapsed"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-white shadow-2xl mx-auto relative group overflow-hidden active:scale-90 transition-transform"
+                    className="w-12 h-12 bg-slate-800 rounded-[1.25rem] flex items-center justify-center text-slate-100 shadow-2xl relative group overflow-hidden active:scale-90 transition-all duration-300 ease-in-out"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <Calculator size={26} className="text-indigo-400 relative z-10" />
+                    <div className="absolute inset-0 bg-sky-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+                    <Calculator size={24} className="text-sky-400 relative z-10" />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 px-4 space-y-2 mt-8 relative z-10">
+            <nav className="flex-1 px-4 space-y-2 mt-4 relative z-10">
               <div className="px-4 mb-4 flex items-center justify-between">
                 <span className={cn(
-                  "text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] transition-opacity duration-500",
+                  "text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] transition-opacity duration-500",
                   !isSidebarOpen && "opacity-0"
                 )}>
                   Research Core
                 </span>
-                {isSidebarOpen && <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]" />}
+                {isSidebarOpen && <div className="w-1.5 h-1.5 rounded-full bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.6)]" />}
               </div>
               {navItems.map((item) => (
                 <NavItem
@@ -177,42 +175,22 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                   collapsed={!isSidebarOpen}
                 />
               ))}
-
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className={cn(
-                  "flex items-center gap-3 w-full p-3.5 rounded-2xl transition-all duration-500 group relative overflow-hidden mt-2",
-                  "text-slate-500 hover:bg-white/50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white"
-                )}
-              >
-                {isDark ? (
-                  <Sun size={22} className="shrink-0 relative z-10 text-amber-400 group-hover:scale-110 transition-transform" />
-                ) : (
-                  <Moon size={22} className="shrink-0 relative z-10 group-hover:scale-110 group-hover:rotate-6 transition-transform" />
-                )}
-                {!isSidebarOpen ? null : (
-                  <span className="font-display font-semibold text-sm tracking-tight relative z-10 opacity-80 group-hover:opacity-100">
-                    {isDark ? 'Light Mode' : 'Dark Mode'}
-                  </span>
-                )}
-              </button>
             </nav>
 
             {/* System Status / Meta */}
             {isSidebarOpen && (
               <div className="px-8 py-6 space-y-4">
-                <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-900/20 border border-indigo-100/50 dark:border-indigo-700/30 space-y-3">
-                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400">
+                <div className="p-4 rounded-2xl bg-slate-800 border border-slate-700/50 space-y-3">
+                  <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-sky-400">
                     <span>Engine Alpha</span>
                     <span>v2.4.0</span>
                   </div>
-                  <div className="w-full h-1 bg-indigo-100 dark:bg-indigo-900/50 rounded-full overflow-hidden">
+                  <div className="w-full h-1 bg-slate-950/50 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-                      className="h-full bg-indigo-500 dark:bg-indigo-400"
+                      className="h-full bg-sky-400"
                     />
                   </div>
                 </div>
@@ -220,11 +198,11 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             )}
 
             {/* User Profile */}
-            <div className="p-4 border-t border-indigo-50/50 dark:border-slate-700/50 mt-auto relative z-10">
+            <div className="p-4 relative z-10 border-t border-slate-800/50 mt-auto">
               {user ? (
                 <div className={cn(
-                  "flex items-center gap-4 p-3.5 rounded-2xl transition-all duration-500 group/user",
-                  isSidebarOpen ? "bg-white/60 dark:bg-slate-800/60 border border-white dark:border-slate-700/50 shadow-sm hover:shadow-md hover:bg-white dark:hover:bg-slate-800" : "justify-center"
+                  "flex items-center p-3 rounded-2xl bg-slate-800 border border-slate-700/50 group transition-all duration-300",
+                  isSidebarOpen ? "gap-4" : "justify-center"
                 )}>
                   <div className="relative group cursor-pointer">
                     <img src={user.photoURL || ''} alt="User" className="w-11 h-11 rounded-[1rem] border-2 border-white shadow-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-3" referrerPolicy="no-referrer" />
@@ -232,8 +210,8 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
                   </div>
                   {isSidebarOpen && (
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-slate-900 dark:text-slate-100 truncate leading-tight">{user.displayName}</p>
-                      <button onClick={() => signOut(auth)} className="text-[10px] font-black text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 uppercase tracking-widest mt-1 inline-flex items-center gap-1 group/out">
+                      <p className="text-sm font-black text-white truncate leading-tight">{user.displayName}</p>
+                      <button onClick={() => signOut(auth)} className="text-[10px] font-black text-indigo-500 text-indigo-400 hover:text-indigo-600 hover:text-indigo-300 uppercase tracking-widest mt-1 inline-flex items-center gap-1 group/out">
                         Sign Out
                         <ChevronRight size={10} className="group-hover/out:translate-x-0.5 transition-transform" />
                       </button>
@@ -256,20 +234,20 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
             </div>
 
             {/* Collapse Toggle */}
-            <div className="px-4 py-6 border-t border-indigo-50/50 dark:border-slate-700/50 relative z-10">
+            <div className="px-4 py-6 border-t border-indigo-50/50 border-slate-700/50 relative z-10">
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                 className="flex items-center transition-all duration-500 w-full"
               >
                 {isSidebarOpen ? (
-                  <div className="flex items-center gap-3 w-full p-3.5 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-white/50 dark:hover:bg-white/10 group/toggle">
-                    <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover/toggle:bg-white dark:group-hover/toggle:bg-slate-700 transition-colors">
+                  <div className="flex items-center gap-3 w-full p-3.5 rounded-2xl text-slate-400 text-slate-500 hover:text-slate-900 hover:text-slate-200 hover:bg-white/50 hover:bg-white/10 group/toggle">
+                    <div className="w-8 h-8 rounded-xl bg-slate-800 bg-slate-800 flex items-center justify-center group-hover/toggle: group-hover/toggle:bg-slate-700 transition-colors">
                       <ChevronRight size={16} className="rotate-180" />
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-[0.2em]">Minimize Workspace</span>
                   </div>
                 ) : (
-                  <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto hover:bg-white dark:hover:bg-slate-700 transition-all shadow-sm hover:shadow-md text-slate-400 dark:text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 group/toggle">
+                  <div className="w-14 h-14 rounded-2xl bg-slate-800 bg-slate-800 flex items-center justify-center mx-auto hover: hover:bg-slate-700 transition-all shadow-sm hover:shadow-md text-slate-400 text-slate-500 hover:text-indigo-600 hover:text-indigo-400 group/toggle">
                     <Menu size={24} className="group-hover/toggle:scale-110 transition-transform" />
                   </div>
                 )}
@@ -283,7 +261,7 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
       <main className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Mobile Header */}
         {isMobile && (
-          <header className="bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between sticky top-0 z-50">
+          <header className="bg-white/80 bg-slate-900/90 backdrop-blur-md border-b border-slate-700 p-4 flex items-center justify-between sticky top-0 z-50">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center text-white font-bold">
                 <Calculator size={18} className="text-indigo-400" />
@@ -291,15 +269,9 @@ export const Layout = ({ children, activeTab, setActiveTab }: {
               <span className="font-display font-bold text-lg tracking-tight">ScholarStack</span>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-xl text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-              >
-                {isDark ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} />}
-              </button>
               {user && (
                 <div className="flex items-center gap-3">
-                  <img src={user.photoURL || ''} alt="User" className="w-8 h-8 rounded-xl border border-slate-200" referrerPolicy="no-referrer" />
+                  <img src={user.photoURL || ''} alt="User" className="w-8 h-8 rounded-xl border border-slate-800" referrerPolicy="no-referrer" />
                   <button onClick={() => signOut(auth)} className="p-2 text-slate-400">
                     <LogOut size={18} />
                   </button>
